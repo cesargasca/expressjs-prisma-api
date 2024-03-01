@@ -1,9 +1,7 @@
 import express from "express";
-import { validateAccessToken } from "../middleware/auth0.middleware";
 import { Prisma, PrismaClient } from '@prisma/client'
 
 import {
-  checkRequiredPermissions,
   validateAccessToken,
 } from "../middleware/auth0.middleware";
 import { AdminMessagesPermissions } from "./messages.permissions";
