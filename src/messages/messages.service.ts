@@ -1,19 +1,29 @@
-import { Message } from "./message.model";
+//TODO implement here service layer for validation of post/get request
 
-export const getPublicMessage = (): Message => {
-  return {
-    text: "This is a public message.",
-  };
-};
+/*
+* getTournamentById
+*
+* */
 
-export const getProtectedMessage = (): Message => {
-  return {
-    text: "This is a protected message.",
-  };
-};
+/*
+*getTeamById
+*
+* */
 
-export const getAdminMessage = (): Message => {
-  return {
-    text: "This is an admin message.",
-  };
-};
+/*
+* getPlayerById
+*
+* */
+
+
+/*
+* getTeamByTournamentId
+*
+* using findMany will return all records in teamplayertournament table that matches
+* So this will need some logic to group by team
+*
+* */
+
+/*
+* getPlayerByTeamIdAndTournamentId
+* */

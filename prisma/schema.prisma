@@ -8,8 +8,72 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-model Player {
-  playerid    Int     @id @default(autoincrement())
-  name  String?
+// Definición de los modelos de la base de datos
+model Tournament {
+  id           Int       @id @default(autoincrement())
+  name String
+  bowling       Bowling   @relation(fields: [bowlingId], references: [id])
+  bowlingId     Int
+  sessions      Session[]
+  teams         Team[]
 }
 
+model Session {
+  id           Int        @id @default(autoincrement())
+  date         DateTime
+  tournament   Tournament @relation(fields: [tournamentId], references: [id])
+  tournamentId Int
+  teamPlayerSessions TeamPlayerSession[]
+}
+
+model Team {
+  id           Int       @id @default(autoincrement())
+  name     String
+  tournament   Tournament @relation(fields: [tournamentId], references: [id])
+  tournamentId Int
+  teamPlayers  TeamPlayer[]
+}
+
+model Player {
+  id          Int          @id @default(autoincrement())
+  name  String
+  teamPlayers TeamPlayer[]
+}
+
+model TeamPlayer {
+  id            Int       @id @default(autoincrement())
+  player        Player    @relation(fields: [playerId], references: [id])
+  playerId      Int
+  team          Team      @relation(fields: [teamId], references: [id])
+  teamId        Int
+  isReplacement Boolean
+  teamPlayerSessions TeamPlayerSession[]
+}
+
+model TeamPlayerSession {
+  id            Int        @id @default(autoincrement())
+  teamPlayer    TeamPlayer @relation(fields: [teamPlayerId], references: [id])
+  teamPlayerId  Int
+  session       Session    @relation(fields: [sessionId], references: [id])
+  sessionId     Int
+  line1         Int
+  line2         Int
+  line3         Int
+  payment       Int
+  handicap      Int
+  assistance    Int
+  lane         Lane       @relation(fields: [laneId], references: [id])
+  laneId       Int
+}
+
+model Bowling {
+  id    Int     @id @default(autoincrement())
+  name  String
+  tournaments Tournament[]
+}
+
+model Lane {
+  id             Int       @id @default(autoincrement())
+  laneId_opponent Int
+  teamplayersessions       TeamPlayerSession[]
+}
